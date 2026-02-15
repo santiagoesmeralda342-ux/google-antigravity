@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Google Antigravity</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+
+        #google {
+            font-size: 80px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .caer {
+            animation: caer 1.5s forwards;
+        }
+
+        @keyframes caer {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(600px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="google">Google</div>
+
+<script>
+    const logo = document.getElementById("google");
+
+    logo.addEventListener("click", () => {
+        logo.classList.add("caer");
+    });
+</script>
+
+</body>
+</html>
