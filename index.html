@@ -1,89 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Pomodoro Timer</title>
+    <title>Pomodoro App</title>
     <style>
         body {
-            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #cfd9df, #e2ebf0);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #e8f0ff, #f7faff);
-            font-family: "Segoe UI", Arial, sans-serif;
-            color: #333;
+            margin: 0;
         }
 
         .container {
             background: #ffffff;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
             text-align: center;
             width: 300px;
         }
 
         h1 {
             margin-bottom: 20px;
-            font-weight: 500;
-            color: #4a6fa5;
+            color: #333;
         }
 
-        .timer {
+        #timer {
             font-size: 48px;
             margin: 20px 0;
-            font-weight: bold;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
+            color: #2c3e50;
         }
 
         button {
-            flex: 1;
-            margin: 0 5px;
-            padding: 10px;
+            padding: 10px 18px;
+            margin: 5px;
             border: none;
-            border-radius: 10px;
-            font-size: 14px;
+            border-radius: 8px;
+            font-size: 16px;
             cursor: pointer;
             transition: background 0.3s;
         }
 
         .start {
-            background-color: #4a6fa5;
+            background: #4CAF50;
             color: white;
-        }
-
-        .start:hover {
-            background-color: #3b5f8a;
         }
 
         .pause {
-            background-color: #a5b4cb;
+            background: #f39c12;
             color: white;
         }
 
-        .pause:hover {
-            background-color: #8fa1be;
-        }
-
         .reset {
-            background-color: #e0e6ef;
-            color: #333;
+            background: #e74c3c;
+            color: white;
         }
 
-        .reset:hover {
-            background-color: #cfd7e6;
-        }
-
-        .mode {
-            margin-top: 15px;
-            font-size: 14px;
-            color: #666;
+        button:hover {
+            opacity: 0.9;
         }
     </style>
 </head>
@@ -91,51 +68,34 @@
 
 <div class="container">
     <h1>Pomodoro</h1>
-    <div class="timer" id="timer">25:00</div>
-
-    <div class="buttons">
-        <button class="start" onclick="startTimer()">Start</button>
-        <button class="pause" onclick="pauseTimer()">Pause</button>
-        <button class="reset" onclick="resetTimer()">Reset</button>
-    </div>
-
-    <div class="mode" id="mode">Focus Time</div>
+    <div id="timer">25:00</div>
+    <button class="start" onclick="startTimer()">Start</button>
+    <button class="pause" onclick="pauseTimer()">Pause</button>
+    <button class="reset" onclick="resetTimer()">Reset</button>
 </div>
 
 <script>
-    let workTime = 25 * 60;
-    let breakTime = 5 * 60;
-    let timeLeft = workTime;
+    let time = 25 * 60;
     let timerInterval = null;
-    let isWork = true;
 
     function updateDisplay() {
-        let minutes = Math.floor(timeLeft / 60);
-        let seconds = timeLeft % 60;
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
         document.getElementById("timer").textContent =
-            `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
     function startTimer() {
         if (timerInterval) return;
 
         timerInterval = setInterval(() => {
-            timeLeft--;
-            updateDisplay();
-
-            if (timeLeft <= 0) {
+            if (time > 0) {
+                time--;
+                updateDisplay();
+            } else {
                 clearInterval(timerInterval);
                 timerInterval = null;
-                isWork = !isWork;
-
-                if (isWork) {
-                    timeLeft = workTime;
-                    document.getElementById("mode").textContent = "Focus Time";
-                } else {
-                    timeLeft = breakTime;
-                    document.getElementById("mode").textContent = "Break Time";
-                }
-                updateDisplay();
+                alert("⏰ ¡Tiempo terminado! Descansa un poco.");
             }
         }, 1000);
     }
@@ -147,9 +107,7 @@
 
     function resetTimer() {
         pauseTimer();
-        isWork = true;
-        timeLeft = workTime;
-        document.getElementById("mode").textContent = "Focus Time";
+        time = 25 * 60;
         updateDisplay();
     }
 
