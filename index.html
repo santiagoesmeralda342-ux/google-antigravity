@@ -2,80 +2,109 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Pomodoro Focus</title>
+<title>Pomodoro Love</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
-body {
-    margin: 0;
-    height: 100vh;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(120deg,#fbc2eb,#a6c1ee);
 }
 
-.app {
-    background: rgba(255,255,255,0.95);
-    padding: 35px;
-    border-radius: 24px;
-    width: 320px;
-    text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+/* CONTENEDOR */
+.app{
+    background:rgba(255,255,255,0.95);
+    padding:30px;
+    border-radius:30px;
+    width:360px;
+    text-align:center;
+    box-shadow:0 20px 40px rgba(0,0,0,0.25);
 }
 
-h1 {
-    font-weight: 500;
-    color: #34495e;
-    margin-bottom: 25px;
+h1{
+    font-family:'Pacifico', cursive;
+    color:#e84393;
+    font-size:34px;
+    margin-bottom:25px;
 }
 
-.circle {
-    width: 220px;
-    height: 220px;
-    border-radius: 50%;
-    border: 10px solid #6c9dfc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 25px;
+/* CORAZÓN */
+.heart{
+    position:relative;
+    width:220px;
+    height:200px;
+    margin:0 auto 30px;
+    background:#ff5f7e;
+    transform:rotate(-45deg);
 }
 
-#timer {
-    font-size: 48px;
-    font-weight: 600;
-    color: #2c3e50;
+.heart::before,
+.heart::after{
+    content:"";
+    position:absolute;
+    width:220px;
+    height:200px;
+    background:#ff5f7e;
+    border-radius:50%;
 }
 
-.controls button {
-    border: none;
-    border-radius: 30px;
-    padding: 12px 22px;
-    font-size: 15px;
-    margin: 5px;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+.heart::before{
+    top:-110px;
+    left:0;
 }
 
-.controls button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+.heart::after{
+    left:110px;
+    top:0;
 }
 
-.start { background: #6c9dfc; color: white; }
-.pause { background: #f6b93b; color: white; }
-.reset { background: #e55039; color: white; }
+/* NÚMERO DEL RELOJ (VISIBLE) */
+#timer{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) rotate(45deg);
+    font-family:'Pacifico', cursive;
+    font-size:48px;
+    color:#ffffff;
+    z-index:10;
+    text-shadow:
+        0 0 5px #000,
+        0 0 10px rgba(0,0,0,0.4);
+}
+
+/* BOTONES */
+.controls button{
+    border:none;
+    border-radius:25px;
+    padding:12px 22px;
+    font-size:15px;
+    margin:6px;
+    cursor:pointer;
+    transition:transform .2s;
+}
+
+.controls button:hover{
+    transform:scale(1.05);
+}
+
+.start{background:#6c5ce7;color:white;}
+.pause{background:#fdcb6e;}
+.reset{background:#d63031;color:white;}
 </style>
 </head>
 
 <body>
 
 <div class="app">
-    <h1>Focus Timer</h1>
+    <h1>Focus Love</h1>
 
-    <div class="circle">
+    <div class="heart">
         <div id="timer">25:00</div>
     </div>
 
@@ -90,33 +119,33 @@ h1 {
 let time = 25 * 60;
 let interval = null;
 
-function updateTimer() {
-    const min = Math.floor(time / 60);
-    const sec = time % 60;
+function updateTimer(){
+    const m = Math.floor(time/60);
+    const s = time % 60;
     document.getElementById("timer").textContent =
-        `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+        `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
 
-function startTimer() {
-    if (interval) return;
-    interval = setInterval(() => {
-        if (time > 0) {
+function startTimer(){
+    if(interval) return;
+    interval = setInterval(()=>{
+        if(time>0){
             time--;
             updateTimer();
-        } else {
+        }else{
             clearInterval(interval);
-            interval = null;
-            alert("⏰ Tiempo terminado. ¡Buen trabajo!");
+            interval=null;
+            alert("❤️ Tiempo terminado");
         }
-    }, 1000);
+    },1000);
 }
 
-function pauseTimer() {
+function pauseTimer(){
     clearInterval(interval);
-    interval = null;
+    interval=null;
 }
 
-function resetTimer() {
+function resetTimer(){
     pauseTimer();
     time = 25 * 60;
     updateTimer();
